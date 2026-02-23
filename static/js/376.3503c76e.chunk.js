@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunklazy_loading_demo=self.webpackChunklazy_loading_demo||[]).push([[376],{376(e,d,n){n.r(d),n.d(d,{default:()=>a});var o=n(579);const a=()=>(0,o.jsxs)("div",{style:{padding:"20px",background:"#4CAF50",color:"white",margin:"10px",borderRadius:"8px"},children:[(0,o.jsx)("h2",{children:"Heavy Component 1 Loaded!"}),(0,o.jsx)("p",{children:"This component was lazily loaded only when you clicked the button."})]})}}]);
+//# sourceMappingURL=376.3503c76e.chunk.js.map

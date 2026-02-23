@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunklazy_loading_demo=self.webpackChunklazy_loading_demo||[]).push([[819],{819(e,d,n){n.r(d),n.d(d,{default:()=>o});var a=n(579);const o=()=>(0,a.jsxs)("div",{style:{padding:"20px",background:"#2196F3",color:"white",margin:"10px",borderRadius:"8px"},children:[(0,a.jsx)("h2",{children:"Heavy Component 2 Loaded!"}),(0,a.jsx)("p",{children:"This is another lazily loaded component. It only loads when needed!"})]})}}]);
+//# sourceMappingURL=819.9726da46.chunk.js.map
