@@ -1,39 +1,118 @@
-import React, { Suspense, lazy, useState } from 'react';
+import React, { useState, Suspense, lazy } from 'react';
+import './App.css';
 
-// Lazy load the components
-const HeavyComponent1 = lazy(() => import('./components/heavyComponent1'));
-const HeavyComponent2 = lazy(() => import('./components/heavyComponent2'));
+// Lazy loading the HeaderImage component
+const HeaderImage = lazy(() => import('./components/HeaderImage'));
 
 function App() {
-  const [showComp1, setShowComp1] = useState(false);
-  const [showComp2, setShowComp2] = useState(false);
+  const [showImage, setShowImage] = useState(false);
+  
+  // Controlled form states
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  // Touched states for validation
+  const [touchedUser, setTouchedUser] = useState(false);
+  const [touchedPass, setTouchedPass] = useState(false);
+
+  // Validation feedback
+  const validateUsername = (val) => {
+    if (!val) return 'Username is required';
+    if (val.length < 3) return 'Username must be at least 3 characters';
+    return '';
+  };
+
+  const validatePassword = (val) => {
+    if (!val) return 'Password is required';
+    if (val.length < 8) return 'Password must be at least 8 characters';
+    if (!/(?=.*[a-z])/.test(val)) return 'Password must contain at least one lowercase letter';
+    if (!/(?=.*[A-Z])/.test(val)) return 'Password must contain at least one uppercase letter';
+    if (!/(?=.*\d)/.test(val)) return 'Password must contain at least one number';
+    return '';
+  };
+
+  const usernameError = validateUsername(username);
+  const passwordError = validatePassword(password);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setTouchedUser(true);
+    setTouchedPass(true);
+
+    if (!usernameError && !passwordError) {
+      alert(`Form submitted successfully!\nUsername: ${username}`);
+    }
+  };
 
   return (
-    <div style={{ fontFamily: 'Arial', padding: '30px', maxWidth: '600px', margin: '0 auto' }}>
-      <h1>⚡ Lazy Loading Demo</h1>
-      <p>Open the <strong>Network tab</strong> in DevTools and watch new JS chunks load when you click the buttons!</p>
-
-      <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
-        <button
-          onClick={() => setShowComp1(true)}
-          style={{ padding: '10px 20px', background: '#4CAF50', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
+    <div className="app-container">
+      <div className="card">
+        
+        <button 
+          className="load-btn" 
+          onClick={() => setShowImage(true)}
+          disabled={showImage}
         >
-          Load Component 1
+          {showImage ? 'Image Loaded' : 'Load Image'}
         </button>
 
-        <button
-          onClick={() => setShowComp2(true)}
-          style={{ padding: '10px 20px', background: '#2196F3', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
-        >
-          Load Component 2
-        </button>
+        {showImage && (
+          <Suspense fallback={<div className="loading-fallback">Loading image...</div>}>
+            <HeaderImage />
+          </Suspense>
+        )}
+
+        <h2>Login</h2>
+        <form onSubmit={handleSubmit}>
+          
+          <div className="form-group">
+            <label htmlFor="username">Username</label>
+            <input 
+              type="text" 
+              id="username"
+              className="form-control"
+              value={username}
+              onChange={(e) => {
+                setUsername(e.target.value);
+                setTouchedUser(true);
+              }}
+              onBlur={() => setTouchedUser(true)}
+              placeholder="Enter username"
+            />
+            {touchedUser && usernameError && (
+              <p className="error-text">{usernameError}</p>
+            )}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input 
+              type="password" 
+              id="password"
+              className="form-control"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setTouchedPass(true);
+              }}
+              onBlur={() => setTouchedPass(true)}
+              placeholder="Enter password"
+            />
+            {touchedPass && passwordError && (
+              <p className="error-text">{passwordError}</p>
+            )}
+          </div>
+
+          <button 
+            type="submit" 
+            className="submit-btn"
+            disabled={!!(usernameError || passwordError)}
+          >
+            Submit
+          </button>
+        </form>
+
       </div>
-
-      {/* Suspense shows fallback while component is loading */}
-      <Suspense fallback={<div style={{ color: 'gray' }}>⏳ Loading component...</div>}>
-        {showComp1 && <HeavyComponent1 />}
-        {showComp2 && <HeavyComponent2 />}
-      </Suspense>
     </div>
   );
 }

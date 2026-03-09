@@ -1,6 +1,5 @@
 {
-"homepage": "https://GurkiratSandhu13.github.io/FullStack2/Experiment-5/lazy-loading-demo",
-  "name": "lazy-loading-demo",
+  "name": "react-form-validation",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -14,8 +13,6 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "predeploy": "npm run build",
-   "deploy": "gh-pages -d build -r https://github.com/GurkiratSandhu13/FullStack2.git --dest Experiment-5/lazy-loading-demo",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -38,8 +35,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "gh-pages": "^6.3.0"
   }
 }
